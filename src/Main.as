@@ -13,10 +13,10 @@ public class Main extends Sprite {
         var _v:Number = 2;
         var _s:Number = 0;
 
-        var a = [500, 100, 20, 1];
+        var a = [1000, 500, 100, 20];
         
         var sx:int = stage.stageWidth;
-        var sy:int = stage.stageHeight*.7;
+        var sy:int = stage.stageHeight;
         
         var s1:Sprite = new Sprite();
         var s2:Sprite = new Sprite();
@@ -38,32 +38,34 @@ public class Main extends Sprite {
                 var c:Object = {a:_a, v:_v, s:_s};
 
                 var i:int = 0;
-                var j:int = 0;
 
                 var _:uint = setInterval(function():void{
-                    g.moveTo(i, sy - b.s);
-                    e.moveTo(i, sy - c.s);
+                    var k:Number = .1;
+                    
+                    g.moveTo(i*k, (sy - b.s)*k);
+                    e.moveTo(i*k, (sy - c.s)*k);
 
                     var delta:Number = idx;
 
                     //trace(i, delta);
+                    i += delta*2;
+                    
+                    b.a += .001;
+                    c.a += .001;
+
+                    b.v += b.a * delta;
+                    c.v += (c.a - .001*delta/2) * delta;
 
                     b.s += b.v * delta;
-                    i += delta*2;
+                    c.s += (c.v - c.a*delta/2) * delta;
 
-                    c.s += (c.v + c.a*delta/2) * delta;
-                    j += delta*2;
-                    
-                    b.v += b.a * delta;
-                    c.v += c.a * delta;
-
-                    g.lineTo(i, sy - b.s);
-                    e.lineTo(j, sy - c.s);
-
+                    g.lineTo(i*k, (sy - b.s)*k);
+                    e.lineTo(i*k, (sy - c.s)*k);
+/*
                     if(i > sx && c.s > sy){
                         clearInterval(_);
                     }
-
+*/
                 }, idx);
             })(k);
         }
