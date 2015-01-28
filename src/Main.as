@@ -9,14 +9,14 @@ import flash.utils.setInterval;
 
 public class Main extends Sprite {
     public function Main() {
-        var _a:Number = -.01;
-        var _v:Number = 2;
+        var _a:Number = -1;
+        var _v:Number = 10;
         var _s:Number = 0;
 
         var a = [1000, 500, 100, 20];
         
         var sx:int = stage.stageWidth;
-        var sy:int = stage.stageHeight;
+        var sy:int = stage.stageHeight*.5;
         
         var s1:Sprite = new Sprite();
         var s2:Sprite = new Sprite();
@@ -40,32 +40,36 @@ public class Main extends Sprite {
                 var i:int = 0;
 
                 var _:uint = setInterval(function():void{
-                    var k:Number = .1;
-                    
-                    g.moveTo(i*k, (sy - b.s)*k);
-                    e.moveTo(i*k, (sy - c.s)*k);
+                    var kx:Number = .1;
+                    var ky:Number = .001;
+
+                    g.moveTo(i*kx, sy - b.s*ky);
+                    e.moveTo(i*kx, sy - c.s*ky);
 
                     var delta:Number = idx;
 
                     //trace(i, delta);
                     i += delta*2;
                     
-                    b.a += .001;
-                    c.a += .001;
-
+                    var ka:Number = .001;
+/*
+                    b.a += ka*delta;
+                    c.a += ka*delta;
+*/
                     b.v += b.a * delta;
-                    c.v += (c.a - .001*delta/2) * delta;
+                    c.v += c.a * delta;
+                    //c.v += (c.a - ka*delta/2) * delta;
 
                     b.s += b.v * delta;
                     c.s += (c.v - c.a*delta/2) * delta;
 
-                    g.lineTo(i*k, (sy - b.s)*k);
-                    e.lineTo(i*k, (sy - c.s)*k);
+                    g.lineTo(i*kx, sy - b.s*ky);
+                    e.lineTo(i*kx, sy - c.s*ky);
 /*
                     if(i > sx && c.s > sy){
                         clearInterval(_);
                     }
-*/
+                    */
                 }, idx);
             })(k);
         }
